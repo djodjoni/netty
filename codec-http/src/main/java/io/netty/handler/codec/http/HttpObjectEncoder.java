@@ -48,12 +48,16 @@ public abstract class HttpObjectEncoder<H extends HttpMessage> extends MessageTo
     private static final ByteBuf ZERO_CRLF_CRLF_BUF = unreleasableBuffer(directBuffer(ZERO_CRLF_CRLF.length)
             .writeBytes(ZERO_CRLF_CRLF));
 
-    private static final int ST_INIT = 0;
-    private static final int ST_CONTENT_NON_CHUNK = 1;
-    private static final int ST_CONTENT_CHUNK = 2;
+    protected static final int ST_INIT = 0;
+    protected static final int ST_CONTENT_NON_CHUNK = 1;
+    protected static final int ST_CONTENT_CHUNK = 2;
 
     @SuppressWarnings("RedundantFieldInitialization")
     private int state = ST_INIT;
+
+    protected int state() {
+        return state;
+    }
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, List<Object> out) throws Exception {
